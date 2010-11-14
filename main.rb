@@ -12,9 +12,10 @@ if __FILE__ == $0
 	f = FolderWalker.new("C:/users/keith/downloads")
 	f.run
 	r = Reporter.new(f)
-	r.print_tree_size
-	r.print_file_sizes
-	r.print_folder_sizes
-	r.print_file_sizes(Format::CSV)
-	r.print_folder_sizes(Format::CSV)
+	#r.print_tree_size
+	#r.print_file_sizes
+	#r.print_folder_sizes
+	#r.print_file_sizes(Format::CSV)
+	#r.print_folder_sizes(Format::CSV)
+	r.print_folder_sizes(Format::CSV, SortStyle::Size, 10000000)
 end

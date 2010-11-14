@@ -17,35 +17,42 @@ class Reporter
 	
 	attr_reader :folder_walker
 	
-	# init function takes a root folder name
-	# default is current directory
+	# init function takes a folder walker
 	def initialize(folder_walker)
 		@folder_walker = folder_walker
 	end
 	
-	def print_files(format = Format::Normal)
-		sort_files = @folder_walker.get_files(SortStyle::Name)
-		sort_files.each { |key, value| puts "#{key} size is #{value}" }
+	# print_file_sizes prints all the files in the folder
+	# tree in either a console friendly format or as CSV
+	def print_file_sizes(format = Format::Normal, sortStyle = SortStyle::Size, minimumSize = 0)
+		sorted_list = @folder_walker.get_files(sortStyle)
+		print_sorted_list(sorted_list, format, minimumSize)
 	end
 	
-	def print_file_sizes(format = Format::Normal)
-		sort_files = @folder_walker.get_files
+	# print_folder_sizes prints all the subfolders in the folder
+	# tree in either a console friendly format or as CSV
+	def print_folder_sizes(format = Format::Normal, sortStyle = SortStyle::Size, minimumSize = 0)
+		sorted_list = @folder_walker.get_folders(sortStyle)
+		print_sorted_list(sorted_list, format, minimumSize)
+	end
+	
+	def print_sorted_list(sorted_list, format = Format::Normal, minimumSize = 0)
 		if format.eql?(Format::Normal)
-			sort_files.each { |key, value| puts "#{key} size is #{commify(value)}" }
+			sorted_list.each do |key, value| 
+				if value > minimumSize
+					puts "#{key} size is #{commify(value)}" 
+				end
+			end
 		else
-			sort_files.each { |key, value| puts "#{key}\t#{commify(value)}" }
+			sorted_list.each do |key, value| 
+				if value > minimumSize
+					puts "#{key}\t#{commify(value)}" 
+				end
+			end
 		end
 	end
 	
-	def print_folder_sizes(format = Format::Normal)
-		sort_folders = @folder_walker.get_folders
-		if format.eql?(Format::Normal)
-			sort_folders.each { |key, value| puts "#{key} size is #{commify(value)}" }
-		else
-			sort_folders.each { |key, value| puts "#{key}\t#{commify(value)}" }
-		end
-	end
-	
+	# print_tree_size writes out the total size of the tree
 	def print_tree_size()
 		puts "Total size for #{@folder_walker.folder} is #{commify(@folder_walker.total_size)}"
 	end
