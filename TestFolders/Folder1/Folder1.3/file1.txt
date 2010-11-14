@@ -1,0 +1,13 @@
+ Volume in drive C is BOOTCAMP
+ Volume Serial Number is E43B-ADF6
+
+ Directory of C:\Users\keith\Documents\Projects\Ruby\FolderUtil\TestFolders\Folder1
+
+11/14/2010  11:36 AM    <DIR>          .
+11/14/2010  11:36 AM    <DIR>          ..
+11/14/2010  11:36 AM                 0 file1.txt
+11/14/2010  11:36 AM    <DIR>          Folder1.1
+11/14/2010  11:36 AM    <DIR>          Folder1.2
+11/14/2010  11:36 AM    <DIR>          Folder1.3
+               1 File(s)              0 bytes
+               5 Dir(s)   1,840,922,624 bytes free
