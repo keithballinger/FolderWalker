@@ -36,6 +36,7 @@ class Reporter
 		print_sorted_list(sorted_list, format, minimumSize)
 	end
 	
+	# common method used to print out sorted lists of either files or folders
 	def print_sorted_list(sorted_list, format = Format::Normal, minimumSize = 0)
 		if format.eql?(Format::Normal)
 			sorted_list.each do |key, value| 
