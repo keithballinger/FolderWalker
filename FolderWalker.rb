@@ -41,6 +41,9 @@ class FolderWalker
 	def run
 		walk_tree(@folder)
 		@total_size = calculate_tree_size(@folder)
+		@sub_folders.each do |key, value|
+				@sub_folders[key] = calculate_tree_size(key)
+		end
 	end
 	
 	# walk_tree is used to recursively walk the folder tree
@@ -94,9 +97,6 @@ class FolderWalker
 		if sort_style.eql?(SortStyle::Name)
 			return @sub_folders.sort
 		else
-			@sub_folders.each do |key, value|
-				@sub_folders[key] = calculate_tree_size(key)
-			end
 			return @sub_folders.sort {|a,b| a[1]<=>b[1]}
 		end
 	end
@@ -107,7 +107,7 @@ class FolderWalker
 	end
 	
 	def print_file_sizes(format = Format::Normal)
-		sort_files = get_file
+		sort_files = get_files
 		if format.eql?(Format::Normal)
 			sort_files.each { |key, value| puts "#{key} size is #{commify(value)}" }
 		else
@@ -127,7 +127,7 @@ class FolderWalker
 	def print_tree_size(folder = "./")
 		puts "Total size for #{folder} is #{commify(@total_size)}"
 	end
-	
+	 
 	#
 	# add commas to the numbers
 	# From http://codesnippets.joyent.com/posts/show/330
@@ -147,9 +147,7 @@ end
 if __FILE__ == $0
 	f = FolderWalker.new("C:/Users/keith/Downloads")
 	f.run
-	#f.print_tree_sorted_by_size
-	#f.print_file_sizes(Format::CSV)
-	#f.print_folder_sizes(Format::CSV)
 	f.print_tree_size("C:/Users/keith/Downloads/")
-	#f.print_folder_sizes
+	f.print_file_sizes
+	f.print_folder_sizes
 end
